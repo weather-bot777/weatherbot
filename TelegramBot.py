@@ -67,7 +67,7 @@ async def cmd_weather(message: types.Message):
             wd = "Посмотри в окно, не пойму что там за погода!"
 
         humidity = data["main"]["humidity"]
-        pressure = data["main"]["pressure"]
+        pressure = round((data["main"]["pressure"]) * 0.750062, 1)
         wind = data["wind"]["speed"]
         sunrise_timestamp = datetime.datetime.fromtimestamp(data["sys"]["sunrise"])
         sunset_timestamp = datetime.datetime.fromtimestamp(data["sys"]["sunset"])

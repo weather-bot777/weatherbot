@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>TelegramBot &#8212; документация Bots 123</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="prev" title="Welcome to Bots’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="telegrambot">
+<h1>TelegramBot<a class="headerlink" href="#telegrambot" title="Ссылка на этот заголовок">¶</a></h1>
+<section id="python">
+<h2>Создание телеграм-бота на Python<a class="headerlink" href="#python" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="line-block">
+<div class="line"><em>— Всем здравствуйте, кто смотрит этот документ.</em></div>
+<div class="line"><em>— Это телеграм бот Weather/Covid.</em></div>
+<div class="line"><em>— Здесь будет описан бот.</em></div>
+<div class="line"><strong>Выполнили студенты группы ИНБО-07-19</strong></div>
+</div>
+<ul class="simple">
+<li><p>Егор Черемушкин</p></li>
+<li><p>Левчук Александр</p></li>
+<li><p>Назар Маркин.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Здесь находится только основная информация.</p>
+</div>
+</section>
+<section id="id1">
+<h2>Форматирование кода<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Код для получения погоды:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   <span class="k">try</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;http://api.openweathermap.org/data/2.5/weather?q=</span><span class="si">{</span><span class="n">message</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&amp;appid=</span><span class="si">{</span><span class="n">open_weather_token</span><span class="si">}</span><span class="s2">&amp;units=metric&quot;</span>
+    <span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="n">city</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+    <span class="n">cur_weather</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;temp&quot;</span><span class="p">]</span>
+
+    <span class="n">weather_description</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;main&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">weather_description</span> <span class="ow">in</span> <span class="n">code_to_smile</span><span class="p">:</span>
+        <span class="n">wd</span> <span class="o">=</span> <span class="n">code_to_smile</span><span class="p">[</span><span class="n">weather_description</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">wd</span> <span class="o">=</span> <span class="s2">&quot;Посмотри в окно, не пойму что там за погода!&quot;</span>
+
+    <span class="n">humidity</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;humidity&quot;</span><span class="p">]</span>
+    <span class="n">pressure</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;pressure&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="mf">0.750062</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">wind</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;wind&quot;</span><span class="p">][</span><span class="s2">&quot;speed&quot;</span><span class="p">]</span>
+    <span class="n">sunrise_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sys&quot;</span><span class="p">][</span><span class="s2">&quot;sunrise&quot;</span><span class="p">])</span>
+    <span class="n">sunset_timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sys&quot;</span><span class="p">][</span><span class="s2">&quot;sunset&quot;</span><span class="p">])</span>
+    <span class="n">length_of_the_day</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;sys&quot;</span><span class="p">][</span><span class="s2">&quot;sunset&quot;</span><span class="p">])</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sys&quot;</span><span class="p">][</span><span class="s2">&quot;sunrise&quot;</span><span class="p">])</span>
+    <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;***</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">***</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Погода в городе: </span><span class="si">{</span><span class="n">city</span><span class="si">}</span><span class="se">\n</span><span class="s2">Температура: </span><span class="si">{</span><span class="n">cur_weather</span><span class="si">}</span><span class="s2">C° </span><span class="si">{</span><span class="n">wd</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Влажность: </span><span class="si">{</span><span class="n">humidity</span><span class="si">}</span><span class="s2">%</span><span class="se">\n</span><span class="s2">Давление: </span><span class="si">{</span><span class="n">pressure</span><span class="si">}</span><span class="s2"> мм.рт.ст</span><span class="se">\n</span><span class="s2">Ветер: </span><span class="si">{</span><span class="n">wind</span><span class="si">}</span><span class="s2"> м/с</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Восход солнца: </span><span class="si">{</span><span class="n">sunrise_timestamp</span><span class="si">}</span><span class="se">\n</span><span class="s2">Закат солнца: </span><span class="si">{</span><span class="n">sunset_timestamp</span><span class="si">}</span><span class="se">\n</span><span class="s2">Продолжительность дня: </span><span class="si">{</span><span class="n">length_of_the_day</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;***Хорошего дня!***&quot;</span>
+                        <span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\U00002620</span><span class="s2"> Проверьте название города </span><span class="se">\U00002620</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Код для получения статистики covid-19</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats&quot;</span>
+<span class="go">c = message.text.split()[1]</span>
+<span class="go">querystring = {&quot;country&quot;: c}</span>
+<span class="go">headers = {</span>
+<span class="go">            &#39;x-rapidapi-host&#39;: &quot;covid-19-coronavirus-statistics.p.rapidapi.com&quot;,</span>
+<span class="go">            &#39;x-rapidapi-key&#39;: &quot;2c1e350ee9msh4e6242c72e6458bp1e3ad2jsn39ac77e7abe7&quot;</span>
+<span class="go">          }</span>
+<span class="go">    try:</span>
+<span class="go">        response = requests.request(&quot;GET&quot;, url, headers=headers, params=querystring)</span>
+<span class="go">        json_data = json.loads(response.text)</span>
+<span class="go">        country = str(json_data[&#39;data&#39;][&#39;covid19Stats&#39;][0][&#39;country&#39;])</span>
+<span class="go">        lastUpdate = str(json_data[&#39;data&#39;][&#39;covid19Stats&#39;][0][&#39;lastUpdate&#39;])</span>
+<span class="go">        deaths = str(json_data[&#39;data&#39;][&#39;covid19Stats&#39;][0][&#39;deaths&#39;])</span>
+<span class="go">        confirmed = str(json_data[&#39;data&#39;][&#39;covid19Stats&#39;][0][&#39;confirmed&#39;])</span>
+<span class="go">        recovered = str(json_data[&#39;data&#39;][&#39;covid19Stats&#39;][0][&#39;recovered&#39;])</span>
+<span class="go">await message.reply(</span>
+<span class="go">            &#39;Страна: &#39; + country + &#39;\nДата: &#39; + lastUpdate + &#39;\nВыявлено: &#39; + confirmed + &#39;\nВыздоровело: &#39; + recovered + &#39;\nУмерло: &#39; + deaths)</span>
+<span class="go">    except:</span>
+<span class="go">        await message.reply(&quot;Не понял&quot;)</span>
+</pre></div>
+</div>
+<p>Код для получения ссылок:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;https://www.gismeteo.ru/weather-moscow-4368/&quot;</span><span class="p">)</span>
+
+<span class="k">await</span> <span class="n">message</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s2">&quot;https://yandex.ru/covid19/stat&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Код на получение подписки</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span> <span class="nf">with_puree</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+<span class="go">    if (not db.subscriber_exists(message.from_user.id)):</span>
+<span class="go">        # если юзера нет в базе, добавляем его</span>
+<span class="go">        db.add_subscriber(message.from_user.id)</span>
+<span class="go">    else:</span>
+<span class="go">        # если он уже есть, то просто обновляем ему статус подписки</span>
+<span class="go">        db.update_subscription(message.from_user.id, True)</span>
+<span class="go">    await message.answer(</span>
+<span class="go">        &quot;Вы успешно подписались на рассылку!&quot;)</span>
+</pre></div>
+</div>
+<p>Код на получение подписки</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">def</span> <span class="nf">with_puree</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="n">types</span><span class="o">.</span><span class="n">Message</span><span class="p">):</span>
+<span class="go">    if (not db.subscriber_exists(message.from_user.id)):</span>
+<span class="go">        # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)</span>
+<span class="go">        db.add_subscriber(message.from_user.id, False)</span>
+<span class="go">        await message.answer(&quot;Вы итак не подписаны.&quot;)</span>
+<span class="go">    else:</span>
+<span class="go">        # если он уже есть, то просто обновляем ему статус подписки</span>
+<span class="go">        db.update_subscription(message.from_user.id, False)</span>
+<span class="go">        await message.answer(&quot;Вы успешно отписаны от рассылки.&quot;)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Bots</a></h1>
+
+
+
+
+
+
+
+
+<h3>Навигация</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TelegramBot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Создание телеграм-бота на Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Форматирование кода</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="предыдущая глава">Welcome to Bots’s documentation!</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, CHML.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/test.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

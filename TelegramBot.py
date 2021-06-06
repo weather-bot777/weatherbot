@@ -29,13 +29,7 @@ markup1 = ReplyKeyboardMarkup().row(
 
 
 @dp.message_handler(commands="start")
-""" Команда для начала взаимодействия с ботом."""
 async def process_command(message: types.Message):
-    """ Функция, отправляющая пользователю приветственное сообщение с интрукцией по использованию бота
-    
-        Параметры: 
-            message (Message) : сообщение  
-    """
     await message.reply("Привет! Я бот-Weather/COVID.\n"
                         "________________________________\n"
                         "---Напиши /weather и город на русском или английском через пробел, чтобы получить погоду. \n"
@@ -47,13 +41,7 @@ async def process_command(message: types.Message):
                         "---Выбери одну из кнопок ниже, чтобы подписаться/отписаться на/от расслыки или получить ссылки на источники погоды/статистики.", reply_markup=markup1)
 
 @dp.message_handler(commands="weather")
-""" Команда для получения прогноза погоды. """
 async def cmd_weather(message: types.Message):
-    """ Функция, принимающая сообщение пользователя с городом. Обращается по API к сайту openweathermap, возвращает пользователю погоду в заданном городе
-    
-        Параметры: 
-            message (Message) : сообщение пользователя
-    """
     code_to_smile = {
         "Clear": "Ясно \U00002600",
         "Clouds": "Облачно \U00002601",
@@ -97,13 +85,7 @@ async def cmd_weather(message: types.Message):
 
 
 @dp.message_handler(commands="covid")
-""" Команда для получения статистики заболеваемости и смертности от COVID-19."""
 async def cmd_covid(message: types.Message):
- """ Функция, принимающая сообщение пользователя с городом или страной. Обращается по API к сайту https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats, возвращает пользователю статистику по заданному городу/стране
-    
-        Параметры: 
-            message (Message) : сообщение пользователя
-    """
 
     url = "https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats"
 
@@ -131,36 +113,18 @@ async def cmd_covid(message: types.Message):
 
 
 @dp.message_handler(Text(equals="Ссылка на погоду"))
-""" Хэндлер, сравнивающий сообщение пользователя с текстом ССЫЛКА НА ПОГОДУ. При совпадении выполняет команду."""
 async def with_puree(message: types.Message):
-""" Функция, выполняющаяся в случае совпадения текста. Возвращает пользователю ссылку на источник погоды
-    
-    Параметры: 
-        message (Message) : сообщение пользователя
-"""
     await message.reply("https://www.gismeteo.ru/weather-moscow-4368/")
 
 
 @dp.message_handler(Text(equals="Ссылка на статистику"))
-""" Хэндлер, сравнивающий сообщение пользователя с текстом ССЫЛКА НА СТАТИСТИКУ. При совпадении выполняет команду."""
 async def with_puree(message: types.Message):
-""" Функция, выполняющаяся в случае совпадения текста. Возвращает пользователю ссылку на источник статистики
-    
-    Параметры: 
-        message (Message) : сообщение пользователя
-"""
     await message.reply("https://yandex.ru/covid19/stat")
 
 
 # Команда активации подписки
 @dp.message_handler(Text(equals="subscribe"))
-""" Хэндлер, сравнивающий сообщение пользователя с текстом subscribe. При совпадении выполняет функцию with_puree."""
-async def with_puree(message: types.Message):
-""" Функция, добавляющая пользователя в БД в случае его отсутствия или просто обновляющая его статус подписки. Возвращает пользователю сообщение об успешной активации подписки.
-    
-    Параметры: 
-        message (Message) : сообщение пользователя
-"""    
+async def with_puree(message: types.Message):   
     if (not db.subscriber_exists(message.from_user.id)):
         # если юзера нет в базе, добавляем его
         db.add_subscriber(message.from_user.id)
@@ -174,13 +138,7 @@ async def with_puree(message: types.Message):
 
 # Команда отписки
 @dp.message_handler(Text(equals="unsubscribe"))
-""" Хэндлер, сравнивающий сообщение пользователя с текстом subscribe. При совпадении выполняет функцию with_puree."""
 async def with_puree(message: types.Message):
-""" Функция, добавляющая пользователя в БД в случае его отсутствия или просто обновляющая его статус подписки. Возвращает пользователю сообщение об успешной отписке.
-    
-    Параметры: 
-        message (Message) : сообщение пользователя
-"""  
     if (not db.subscriber_exists(message.from_user.id)):
         # если юзера нет в базе, добавляем его с неактивной подпиской (запоминаем)
         db.add_subscriber(message.from_user.id, False)

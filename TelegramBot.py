@@ -29,7 +29,9 @@ markup1 = ReplyKeyboardMarkup().row(
 
 
 @dp.message_handler(commands="start")
+""" Команда для начала взаимодействия с ботом."""
 async def process_command(message: types.Message):
+    """ Функция, отправляющая пользователю приветственное сообщение с интрукцией по использованию бота """
     await message.reply("Привет! Я бот-Weather/COVID.\n"
                         "________________________________\n"
                         "---Напиши /weather и город на русском или английском через пробел, чтобы получить погоду. \n"
@@ -41,7 +43,9 @@ async def process_command(message: types.Message):
                         "---Выбери одну из кнопок ниже, чтобы подписаться/отписаться на/от расслыки или получить ссылки на источники погоды/статистики.", reply_markup=markup1)
 
 @dp.message_handler(commands="weather")
+""" Команда для получения прогноза погоды. """
 async def cmd_weather(message: types.Message):
+    """ Функция, принимающая сообщение пользователя с городом. Обращается по API к сайту openweathermap, возвращает пользователю погоду в заданном городе """
     code_to_smile = {
         "Clear": "Ясно \U00002600",
         "Clouds": "Облачно \U00002601",
